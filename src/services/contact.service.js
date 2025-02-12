@@ -1,4 +1,5 @@
 import createApiClient from "./api.service";
+
 class ContactService {
   constructor(baseUrl = "/api/contacts") {
     this.api = createApiClient(baseUrl);
@@ -22,4 +23,5 @@ class ContactService {
     return (await this.api.delete(`/${id}`)).data;
   }
 }
+
 export default new ContactService();

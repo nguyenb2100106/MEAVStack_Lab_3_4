@@ -6,17 +6,17 @@
         name="name"
         type="text"
         class="form-control"
-        vmodel="contactLocal.name"
+        v-model="contactLocal.name"
       />
       <ErrorMessage name="name" class="error-feedback" />
     </div>
     <div class="form-group">
-      <label for="email">E-mail</label>
+      <label for="email">Email</label>
       <Field
         name="email"
         type="email"
         class="form-control"
-        vmodel="contactLocal.email"
+        v-model="contactLocal.email"
       />
       <ErrorMessage name="email" class="error-feedback" />
     </div>
@@ -26,7 +26,7 @@
         name="address"
         type="text"
         class="form-control"
-        vmodel="contactLocal.address"
+        v-model="contactLocal.address"
       />
       <ErrorMessage name="address" class="error-feedback" />
     </div>
@@ -36,7 +36,7 @@
         name="phone"
         type="tel"
         class="form-control"
-        vmodel="contactLocal.phone"
+        v-model="contactLocal.phone"
       />
       <ErrorMessage name="phone" class="error-feedback" />
     </div>
@@ -45,24 +45,23 @@
         name="favorite"
         type="checkbox"
         class="form-check-input"
-        vmodel="contactLocal.favorite"
+        v-model="contactLocal.favorite"
       />
       <label for="favorite" class="form-check-label">
-        <strong>Liên hệ yêu thích</strong>
+        <strong>Liên hệ yêu thích.</strong>
       </label>
     </div>
     <div class="form-group">
-      <button class="btn btn-primary">Lưu</button>
+      <button class="btn btn-primary">
+        <i class="fa-solid fa-floppy-disk"></i> Lưu
+      </button>
       <button
-        v-if="contactLocal._id"
+        v-if="contact._id"
         type="button"
         class="ml-2 btn btn-danger"
         @click="deleteContact"
       >
-        Xóa
-      </button>
-      <button type="button" class="ml-2 btn btn-danger" @click="Cancel">
-        Thoát
+        <i class="fa-solid fa-user-minus"></i>Xóa
       </button>
     </div>
   </Form>
@@ -71,6 +70,7 @@
 <script>
 import * as yup from "yup";
 import { Form, Field, ErrorMessage } from "vee-validate";
+
 export default {
   components: {
     Form,
@@ -90,8 +90,8 @@ export default {
         .max(50, "Tên có nhiều nhất 50 ký tự."),
       email: yup
         .string()
-        .email("E-mail không đúng.")
-        .max(50, "E-mail tối đa 50 ký tự."),
+        .email("Email không đúng.")
+        .max(50, "Email tối đa 50 ký tự."),
       address: yup.string().max(100, "Địa chỉ tối đa 100 ký tự."),
       phone: yup
         .string()
@@ -114,19 +114,10 @@ export default {
     deleteContact() {
       this.$emit("delete:contact", this.contactLocal.id);
     },
-    Cancel() {
-      const reply = window.confirm(
-        "You have unsaved changes! Do you want to leave?"
-      );
-      if (!reply) {
-        // stay on the page if
-        // user clicks 'Cancel'
-        return false;
-      } else this.$router.push({ name: "contactbook" });
-    },
   },
 };
 </script>
+
 <style scoped>
 @import "@/assets/form.css";
 </style>
